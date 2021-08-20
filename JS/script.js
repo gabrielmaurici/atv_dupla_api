@@ -38,8 +38,32 @@ function listarTodos() {
                     <td scope="row">${jogo.id}</td>
                     <td>${jogo.nome}</td>
                     <td>${jogo.descricao}</td>
+                    <td>
+                        <a href="./editar.html?id=${jogo.id}">Editar</a>
+                        <a href="" onclick="deletar(${jogo.id})">Deletar</a>
+                    </td>
                 </tr>
             `
         });
+    }
+}
+
+//Não funcional
+function editar() {
+    let id = document.getElementById('id').value;
+    let jogo = document.getElementById('nome').value;
+    let descricao = document.getElementById('descricao').value;
+    let cadastroJogo = {'Id': id, 'Nome': jogo, 'Descricao': descricao};
+    let model = JSON.stringify(cadastroJogo);
+    updateBanco(model);
+}
+//Não funcional
+function updateBanco(model) {
+    let request = new XMLHttpRequest();
+    request.open('PUT', endpoint+'/'+model.id);
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(model));
+    request.onload = function(){
+        console.log(request.status);
     }
 }
